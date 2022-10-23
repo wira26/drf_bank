@@ -1,3 +1,4 @@
+from ipaddress import ip_address
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -25,4 +26,10 @@ class Transaction(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True, related_name="transactions")
 
     def __str__(self):
-        return f"{self.amount}{self.currency}{self.date}"
+        return f"{self.amount} {self.currency.code} {self.date}"
+
+class AllowList(models.Model):
+    ip_address = models.GenericIPAddressField()
+
+    def __str__(self):
+        return self.ip_address
